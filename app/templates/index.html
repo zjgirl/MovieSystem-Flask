@@ -1,0 +1,66 @@
+{% extends 'base.html'%}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% import '_macros.html' as macros %}
+
+{% block title %} Flasky - index {% endblock %}
+
+{% block page_content %}
+	<div class="page-header" >
+
+		<div style="float:left; width:70%; border">
+			<h1>Hello, {{current_user.username}} 欢迎进入电影检索平台</h1>
+		</div>
+
+		<div >
+			<div style="padding-top: 10px">
+				<form action='{{url_for('.text_search')}}' method="post">
+					<input type="text" name="keyword" placeholder="输入关键词...">
+					<input type="submit" value="文本检索">
+				</form>
+			</div>
+			<div style="padding-top: 10px">
+				<form action='{{url_for('.picture_search')}}' method="post" enctype="multipart/form-data">
+					<input style="float:left" type="file" name="picture" accept="image/*">
+					<input type="submit" value="图像检索">
+				</form>
+			</div>
+		</div>
+
+	</div>
+
+	<div>
+		<ul style="list-style-type: none;">
+			{% for movie in movies %}
+				<li style="display:flex">
+					<div>
+						<img width="150px" src="{{ movie.posterpath }}" alt="你的图片被外星人劫持了"/>
+					</div>
+					<div style="padding-left:20px">
+						<h4 style="font-weight: bold;">电影名称：<span style="word-break:break-all;  color:gray"> {{ movie.moviename }} </span> </h4>
+						<h4 style="font-weight: bold;">上映时间： <span style="word-break:break-all;  color:gray"> {{ movie.time }}  </span> </h4>
+						<h4 style="font-weight: bold;">导演： <span style="word-break:break-all;  color:gray"> {{ movie.director }}  </span></h4>
+						<h4 style="font-weight: bold;">演员：  <span style="word-break:break-all;  color:gray"> {{ movie.actor }}  </span></h4>
+						<h4 style="font-weight: bold;">简介： <span style="word-break:break-all; color:gray"> {{ movie.content }} </span> </h4>
+						<a href="{{url_for('.play', id=movie.id)}}">点击播放</a>
+					</div>
+				</li>
+				<div>
+					<HR color=#e3ebec SIZE=2>
+				</div>
+
+			{% endfor %}
+	    </ul>
+
+	</div>
+
+
+	<div class='pagination'>
+		{{ macros.pagination_widget(pagination, 'main.index')}}
+	</div>
+{% endblock %}
+
+
+{% block scripts %}
+{{ super() }}
+{{ pagedown.include_pagedown() }}
+{% endblock %}
