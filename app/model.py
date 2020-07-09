@@ -22,6 +22,11 @@ class MovieInfo(db.Model):
         db.session.add(newMovie)
         db.session.commit()
 
+    @staticmethod
+    def deleteMovie(movie):
+        db.session.delete(movie)
+        db.session.commit()
+
 #define user table
 class User(UserMixin, db.Model):
     __tablename__ = 'user'

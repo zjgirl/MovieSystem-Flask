@@ -77,3 +77,14 @@ def upload():
         return redirect(url_for('.index'))
     return render_template('upload.html', form=form)
 
+
+@main.route('/delete-movie/<id>', methods=['GET', 'POST'])
+@login_required
+def delete_movie(id):
+    movie = MovieInfo.query.get_or_404(id)
+    MovieInfo.deleteMovie(movie)
+    os.remove(os.path.join(os.path.dirname(__file__), "../") + movie.moviepath)
+    os.remove(os.path.join(os.path.dirname(__file__), "../") + movie.posterpath)
+    flash('You have removed a post.')
+    return redirect(url_for('.index'))
+
