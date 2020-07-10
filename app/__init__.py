@@ -6,7 +6,7 @@ from flask_login import LoginManager
 from config import Config
 from flask_pagedown import PageDown
 import os
-from flask_uploads import UploadSet, configure_uploads, IMAGES, AUDIO
+from flask_uploads import UploadSet, configure_uploads, IMAGES
 
 
 bootstrap = Bootstrap()
@@ -35,7 +35,8 @@ def create_app():
 
     #文件上载配置
     poster = UploadSet('POSTER', IMAGES)
-    movie = UploadSet('MOVIE', ['mp4', 'avi'])
+    movie = UploadSet('MOVIE')
+    app.config['UPLOADED_MOVIE_ALLOW'] = ['mp4', 'avi']
     app.config['UPLOADED_POSTER_DEST'] = os.path.join(os.path.dirname(__file__), 'static', 'poster')
     app.config['UPLOADED_MOVIE_DEST'] = os.path.join(os.path.dirname(__file__), 'static', 'movie')
     configure_uploads(app, [poster, movie])
