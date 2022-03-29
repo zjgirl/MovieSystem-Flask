@@ -34,7 +34,7 @@ numpy==1.13.1
 openapi-spec-validator==0.2.8
 opencv-python==4.2.0.34
 os-service-types==1.7.0
-paramiko==2.7.1
+paramiko==2.10.1
 pbr==5.4.5
 pycparser==2.20
 PyMySQL==0.9.3
